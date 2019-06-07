@@ -41,7 +41,7 @@ ui <- fluidPage(
    )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw growth curve
 server <- function(input, output) {
    
    output$vonb <- renderPlot({
