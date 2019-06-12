@@ -1,76 +1,85 @@
-library(shiny)
-library(ggplot2)
+
+rm(list = ls(all = TRUE))
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
-   
-   titlePanel("Von Bertalanffy growth curve"),
-   
-   # Sidebar with four sliders (max age, linf, k , and t0) and outputPlot of the Von B curve 
-   sidebarLayout(
-      sidebarPanel(
-        
-         sliderInput("maxage",
-                     "Max Age",
-                      min = 0,
-                      max = 25,
-                      value = 10),
-        
-         sliderInput("linf",
-                     "Linf",
-                     min = 100,
-                     max = 500,
-                     value = 500),
-      
-         sliderInput("k",
-                     "k",
-                     min = .01,
-                     max = 1,
-                     value = .5),
-   
-         sliderInput("t0",
-                     "t0",
-                     min = -5,
-                     max = 5,
-                     value = 0)),
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("vonb") #
-      )
-   )
+ui = fluidPage(
+  
+  titlePanel("Von Bertalanffy growth curve"),
+  
+  h5("One of the most common models Fisheries Biologists used to evaluate the relationship between length and age for a
+     particular population is the Von Bertalanffy growth equation. The Von Bertalanffy growth curve is represented by:"),
+  br(),
+  
+  h5("Lt = Linf(1 - exp(-k(t - t0)))"),
+  
+  br(),
+  h5("describe parameters here."),
+  
+  hr(),
+  
+  # Sidebar with four sliders (max age, linf, k , and t0) and outputPlot of the Von B curve 
+  fluidRow(
+    column(3,
+           
+           sliderInput("maxage",
+                       "Max Age",
+                       min = 0,
+                       max = 25,
+                       value = 10),
+           
+           sliderInput("linf",
+                       "Linf",
+                       min = 100,
+                       max = 500,
+                       value = 500),
+           
+           sliderInput("k",
+                       "k",
+                       min = .01,
+                       max = 1,
+                       value = .5),
+           
+           sliderInput("t0",
+                       "t0",
+                       min = -5,
+                       max = 5,
+                       value = 0)),
+    
+    column(9,
+           plotOutput("vonb") 
+    )
+  )
 )
 
 # Define server logic required to draw growth curve
 server <- function(input, output) {
-   
-   output$vonb <- renderPlot({
- 
-     age = as.data.frame(0:input$maxage) 
-     length = as.data.frame(input$linf * (1-exp(-input$k * (age - input$t0)))) 
-     b = cbind(age, length)
-     colnames(b) = c("age", "length")
-     
-     ggplot(b, aes(x = age, y= length)) +
-       geom_line(size  = 1, color = "blue") +
-       
-       theme_bw() + #Adds black border around figure
-       theme(axis.line = element_line(colour = "black"), #Removes grid
-             panel.grid.major = element_blank(),
-             panel.grid.minor = element_blank(),
-             panel.background = element_blank()) +
-       
-       xlab("Age") + 
-       
-       ylab("Length (TL, mm)") +
-       
-       xlim(0, input$maxage) +
-       
-       ylim(0, 500)
-     
-   })
+  
+  output$vonb <- renderPlot({
+    
+    age = as.data.frame(0:input$maxage) 
+    length = as.data.frame(input$linf * (1-exp(-input$k * (age - input$t0)))) 
+    b = cbind(age, length)
+    colnames(b) = c("age", "length")
+    
+    ggplot(b, aes(x = age, y= length)) +
+      geom_line(size  = 1, color = "blue") +
+      
+      theme_bw() + #Adds black border around figure
+      theme(axis.line = element_line(colour = "black"), #Removes grid
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank()) +
+      
+      xlab("Age") + 
+      
+      ylab("Length (TL, mm)") +
+      
+      xlim(0, input$maxage) +
+      
+      ylim(0, 500)
+    
+  })
 }
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
