@@ -8,7 +8,7 @@ ui = fluidPage(
   
   titlePanel("Von Bertalanffy growth curve"),
   
-  h5("One of the most common models Fisheries Biologists used to evaluate the relationship between length and age for a
+  h5("One of the most common models Fisheries Biologists use to evaluate the relationship between length and age for a
      particular population is the Von Bertalanffy growth equation. The Von Bertalanffy growth curve is represented by:"),
   br(),
   
