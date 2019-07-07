@@ -15,8 +15,8 @@ ui = fluidPage(
   
   h5("Where:"),
   
-  withMathJax(HTML("\\(L_{inf}\\) = Asymptotic average length, <br/> \\(k\\) = Brody growth coefficient, and <br/> \\(t_{0}\\) = the age at average length zero")),
-
+  h5(withMathJax(HTML("\\(L_{t}\\) = Expected length at age \\(t\\), <br/>\\(L_{inf}\\) = Asymptotic average length, <br/> \\(k\\) = Brody growth coefficient, and <br/> \\(t_{0}\\) = the age at average length zero"))),
+  
   hr(),
   
   # Sidebar with four sliders (max age, linf, k , and t0) and outputPlot of the Von B curve 
