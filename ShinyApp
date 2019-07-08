@@ -65,13 +65,18 @@ server <- function(input, output) {
     colnames(b) = c("age", "length")
     
     ggplot(b, aes(x = age, y= length)) +
-      geom_line(size  = 1, color = "blue") +
+      geom_line(size  = 1.5, color = "blue") +
       
       theme_bw() + #Adds black border around figure
       theme(axis.line = element_line(colour = "black"), #Removes grid
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.background = element_blank()) +
+      
+      theme(axis.title.y = element_text(face = "bold", color = "black", size = 14),
+            axis.text.y  = element_text(face = "bold", color = "black", size = 12),
+            axis.title.x = element_text(face = "bold", color = "black", size = 14),
+            axis.text.x  = element_text(face = "bold", color = "black", size = 12)) +
       
       xlab("Age") + 
       
