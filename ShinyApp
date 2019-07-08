@@ -5,20 +5,21 @@ rm(list = ls(all = TRUE))
 
 # Define UI for application that draws a histogram
 ui = fluidPage(
-  
+
   titlePanel("Von Bertalanffy Growth Curve"),
   
-  h5("One of the most common models Fisheries Biologists use to evaluate the relationship between length and age for a
-     particular population is the Von Bertalanffy growth equation. The Von Bertalanffy growth curve is represented by:"),
-     
+  h5("Evaluating growth can provide Fisheries Biologists with great insight into the overall health and ecology of a fish population. Growth generally refers to an individual’s increase in either weight or length over time. Although there are numerous methods of evaluating growth, one of the most common methods is fitting a model to length at age data. The Bertalanffy growth curve is the most common model fit to length and age data is used to predict the length at a given age. The Von Bertalanffy growth curve is represented by:"),
+  
   h5("$$L_{t} = L_{inf}(1 - exp^{(-k(t - t_{0}))})$$"),
   
   h5("Where:"),
   
-  h5(withMathJax(HTML("\\(L_{t}\\) = Expected length at age \\(t\\), <br/>\\(L_{inf}\\) = Asymptotic average length, <br/> \\(k\\) = Brody growth coefficient, and <br/> \\(t_{0}\\) = the age at average length zero"))),
+  h5(withMathJax(HTML("\\(L_{t}\\) = Expected length at age \\(t\\), <br/>\\(L_{inf}\\) = Asymptotic average length, <br/> \\(k\\) = Brody growth coefficient, and <br/> \\(t_{0}\\) = the age at length zero"))),
+  
+  h5("When evaluating growth, it is important to understand what each of the von Bertalanffy growth parameters represent and how they interact. The parameters have been described above and to better understand how the parameters interact, adjust each parameter in the module below and observe how the growth curve changes on the bottom right. "),
   
   hr(),
-  
+
   # Sidebar with four sliders (max age, linf, k , and t0) and outputPlot of the Von B curve 
   fluidRow(
     column(3,
