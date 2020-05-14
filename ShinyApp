@@ -1,11 +1,21 @@
-library(shiny)
-library(ggplot2)
+#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#
+# Sean Lusk
+# 2020-04-20
+# Purpose:
+#     A Shiny application is to help students and professionals better understand 
+#     the components of the Von Bertalanffy growth equation. 
+#   
+#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#~%~#
 
-rm(list = ls(all = TRUE))
+library(shiny) 
+library(ggplot2)
+library(extrafont)
+
+rm(list = ls(all = TRUE)) # Clear environment
 
 # Define UI for application that draws a histogram
 ui = fluidPage(
-
+  
   titlePanel("Von Bertalanffy Growth Curve"),
   
   h5("Evaluating growth can provide Fisheries Biologists with great insight into the overall health and ecology of a fish population. Growth generally refers to an individual’s increase in either weight or length over time. Although there are numerous methods of evaluating growth, one of the most common methods is fitting a model to length at age data. The Bertalanffy growth curve is the most common model fit to length and age data is used to predict the length at a given age. The Von Bertalanffy growth curve is represented by:"),
@@ -19,7 +29,7 @@ ui = fluidPage(
   h5("When evaluating growth, it is important to understand what each of the von Bertalanffy growth parameters represent and how they interact. The parameters have been described above and to better understand how the parameters interact, adjust each parameter in the module below and observe how the growth curve changes on the bottom right. "),
   
   hr(),
-
+  
   # Sidebar with four sliders (max age, linf, k , and t0) and outputPlot of the Von B curve 
   fluidRow(
     column(3,
@@ -67,17 +77,23 @@ server <- function(input, output) {
     ggplot(b, aes(x = age, y= length)) +
       geom_line(size  = 1.5, color = "blue") +
       
-      theme_bw() + #Adds black border around figure
-      theme(axis.line = element_line(colour = "black"), #Removes grid
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.background = element_blank()) +
-      
-      theme(axis.title.y = element_text(face = "bold", color = "black", size = 14),
-            axis.text.y  = element_text(face = "bold", color = "black", size = 12),
-            axis.title.x = element_text(face = "bold", color = "black", size = 14),
-            axis.text.x  = element_text(face = "bold", color = "black", size = 12)) +
-      
+      theme_classic() +
+      theme (axis.title.y = element_text(size = 14, margin = margin(t = 0, r = 10, b = 0, l = 0), colour = "black"), #set the size, spacing, and color for the y-axis and x-axis titles
+             axis.title.x = element_text(size = 14, margin = margin(t = 10, r = 0, b = 0, l = 0), colour = "black"),
+             text = element_text(family = "Times New Roman"), #set the font type
+             plot.title = element_text(face = "bold", family = "Arial"), #modify plot title, the B in this case
+             legend.position = c(0.3,0.85), #position the legend on the figure
+             legend.text = element_text(size = 12), #adjust size of text for legend
+             plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"), #margin for the plot
+             axis.ticks.y = element_line(size = 0.5), #set size of the tick marks for y-axis
+             axis.ticks.x = element_line(size = 0.5), #set size of the tick marks for x-axis
+             axis.ticks.length = unit(0.2,"cm"), #adjust length of the tick marks
+             axis.text.y = element_text(colour = "black", size = 14, angle = 0, vjust = 0.5, hjust = 1, #set size and location of the tick labels for the y axis
+                                        margin = margin(t = 0, r = 5, b = 0, l = 0)),
+             axis.text.x = element_text(colour = "black", size = 14, angle = 0, vjust = 0, hjust = 0.5, #set size and location of the tick labels for the x axis
+                                        margin = margin(t = 5, r = 0, b = 0, l = 0)),
+             axis.line = element_line(colour = "black", size = 0.5, lineend = "square")) + #set the axis size, color, and end shape
+    
       xlab("Age") + 
       
       ylab("Length (TL, mm)") +
